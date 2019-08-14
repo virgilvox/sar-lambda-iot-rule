@@ -1,0 +1,10 @@
+{
+    "name": "lambda-iot-rule-topic-publisher",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "author": "Moheeb Zara, Amazon Web Services",
+    "license": "MIT",
+    "dependencies": {},
+    "devDependencies": {}
+  }

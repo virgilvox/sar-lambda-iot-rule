@@ -1,0 +1,65 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Transform: AWS::Serverless-2016-10-31
+Description: >
+  lambda-iot-rule
+
+Parameters:
+  PublishTopic:
+    Type: String
+    Default: "topic_1"
+    Description: (Required) Provide a topic to publish on. The default will publish on topic_1
+  SubscribeTopic:
+    Type: String
+    Default: "topic_2"
+    Description: (Required) Provide a topic for the IoT rule to query. The default will trigger on any message published to topic_2
+    
+Resources:
+  TopicSubscriber:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      Runtime: nodejs10.x
+      CodeUri: src/topicSubscriber/
+      Policies:
+        - DynamoDBCrudPolicy:
+            TableName: !Ref MyTable
+      Environment:
+        Variables:
+          TABLE_NAME: !Ref MyTable
+      Events:
+        IoT:
+          Type: IoTRule
+          Properties:
+            AwsIotSqlVersion: 2016-03-23
+            Sql: !Sub "SELECT * FROM '${SubscribeTopic}'"
+  TopicPublisher:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: app.handler
+      Runtime: nodejs10.x
+      CodeUri: src/topicPublisher/
+      Policies:
+        - Version: '2012-10-17' 
+          Statement:
+            - Effect: Allow
+              Action:
+                - iot:Publish
+                - iot:DescribeEndpoint
+              Resource: '*'
+      Environment:
+        Variables:
+          PUBLISH_TOPIC: !Ref PublishTopic
+      Events:
+        PostResource:
+          Type: Api
+          Properties:
+            Path: /publish
+            Method: post
+  
+  MyTable:
+    Type: AWS::Serverless::SimpleTable
+
+Outputs:
+  ApiURL:
+    Description: "API endpoint URL for Prod environment"
+    Value: !Sub "https://${ServerlessRestApi}.execute-api.${AWS::Region}.amazonaws.com/Prod/"
