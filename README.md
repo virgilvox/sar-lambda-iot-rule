@@ -1,5 +1,5 @@
 # Lambda IoT Rule
-A simple AWS IoT Rule that forwards messages from a specific topic to an AWS Lambda function that then updates a DynamoDB table.
+Deploy a serverless backend that can both send and receive messages on the AWS IoT topic stream. This includes an AWS Lambda function than can publish an IoT message and a simple AWS IoT Rule that forwards messages from a specific topic to an AWS Lambda function that then updates a DynamoDB table.
 
 ```bash
 .
@@ -13,6 +13,16 @@ A simple AWS IoT Rule that forwards messages from a specific topic to an AWS Lam
 │       └── package.json            <-- NodeJS dependencies and scripts
 ├── template.yaml               <-- SAM template
 ```
+
+This SAR app will deploy two Lambda functions are included in the src/ directory. It also deploys a DynamoDB table and an API Gateway endpoint.
+
+## topicPublisher
+
+Receives input from an API Gateway endpoint that is generated and can be found by clicking on the API Gateway node in the main Lambda editor view. Its a REST POST endpoint and will forward the body of the message to the defined AWS IoT topic.
+
+## topicSubscriber
+
+This Lambda function is invoked by an AWS IoT rule that forwards any messages on the defined AWS IoT topic. It then creates an entry in the generated DynamoDB table as a JSON object consisting of an ID, timestamp, and the forwarded payload.
 
 ## Requirements
 
