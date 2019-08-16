@@ -5,16 +5,21 @@ Deploy a serverless backend that can both send and receive messages on the AWS I
 .
 ├── README.MD                   <-- This instructions file
 ├── src 
-    └── topicPublisher              <-- Source code for a lambda function
+│  └── topicPublisher              <-- Source code for a lambda function
 │       └── app.js                  <-- Lambda handler to publish messages on an IoT topic stream
 │       └── package.json            <-- NodeJS dependencies and scripts
-    └── topicSubscriber
+│  └── topicSubscriber
 │       └── app.js                  <-- Lambda handler for messages forwarded from the IoT topic stream
 │       └── package.json            <-- NodeJS dependencies and scripts
 ├── template.yaml               <-- SAM template
 ```
 
-This SAR app will deploy two Lambda functions are included in the src/ directory. It also deploys a DynamoDB table and an API Gateway endpoint.
+## Services Deployed
+
+* Two AWS Lambda Functions (Described in the next section)
+* A DynamoDB table
+* An AWS IoT Rule 
+* An Amazon API Gateway endpoint
 
 ## topicPublisher
 
