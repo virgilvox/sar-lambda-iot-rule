@@ -37,7 +37,8 @@ This Lambda function is invoked by an AWS IoT rule that forwards any messages on
 
 ## Parameter Details
 
-* QUERY: The sql query used in the IoT rule. This defaults to "SELECT * FROM 'topic_2'" which forwards all messages on the topic 'topic_2' to the Lambda function.
+* PublishTopic: (Required) Provide a topic to publish on. The default will publish on topic_1
+* SubscribeTopic: (Required) Provide a topic for the IoT rule to query. The default will trigger on any message published to topic_2
 
 ## Using this Application
 

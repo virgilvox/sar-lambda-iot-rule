@@ -23,7 +23,7 @@ Resources:
     Type: AWS::Serverless::SimpleTable
   TopicPublisher:
     Properties:
-      CodeUri: s3://iot-test-mo/4949ad71178fd3d56f8af634a4c0359e
+      CodeUri: s3://sar-moheeb-zara-aws/4949ad71178fd3d56f8af634a4c0359e
       Environment:
         Variables:
           PUBLISH_TOPIC:
@@ -47,7 +47,7 @@ Resources:
     Type: AWS::Serverless::Function
   TopicSubscriber:
     Properties:
-      CodeUri: s3://iot-test-mo/1aea7ebb9939f49881023f1fd79371db
+      CodeUri: s3://sar-moheeb-zara-aws/df8ba6fcd03c22bcbd2d6df9daade17d
       Environment:
         Variables:
           TABLE_NAME:
